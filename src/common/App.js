@@ -9,6 +9,7 @@ function App() {
   const [line, setLine] = useState("2.5");
   const [color, setColor] = useState("#F6F9FC");
 
+  console.log(line, color);
   return (
     <Wrapper className="App">
       <Canvas line={line} color={color} />

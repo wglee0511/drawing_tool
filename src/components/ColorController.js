@@ -4,17 +4,45 @@ import theme from "../styles/theme";
 
 const ColorController = (props) => {
   const { setColor } = props;
+
   return (
     <Wrapper>
-      <Color color={theme.color.black} />
-      <Color color={theme.color.white} />
-      <Color color={theme.color.red} />
-      <Color color={theme.color.orange} />
-      <Color color={theme.color.yellow} />
-      <Color color={theme.color.green} />
-      <Color color={theme.color.sky} />
-      <Color color={theme.color.blue} />
-      <Color color={theme.color.purple} />
+      <Color
+        color={theme.color.black}
+        onClick={() => setColor(() => theme.color.black)}
+      />
+      <Color
+        color={theme.color.white}
+        onClick={() => setColor(() => theme.color.white)}
+      />
+      <Color
+        color={theme.color.red}
+        onClick={() => setColor(() => theme.color.red)}
+      />
+      <Color
+        color={theme.color.orange}
+        onClick={() => setColor(() => theme.color.orange)}
+      />
+      <Color
+        color={theme.color.yellow}
+        onClick={() => setColor(() => theme.color.yellow)}
+      />
+      <Color
+        color={theme.color.green}
+        onClick={() => setColor(() => theme.color.green)}
+      />
+      <Color
+        color={theme.color.sky}
+        onClick={() => setColor(() => theme.color.sky)}
+      />
+      <Color
+        color={theme.color.blue}
+        onClick={() => setColor(() => theme.color.blue)}
+      />
+      <Color
+        color={theme.color.purple}
+        onClick={() => setColor(() => theme.color.purple)}
+      />
     </Wrapper>
   );
 };
