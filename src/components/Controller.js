@@ -4,10 +4,12 @@ import ColorController from "./ColorController";
 import LineController from "./LineController";
 
 const Controller = (props) => {
+  const { setLine, setColor, line } = props;
+
   return (
     <Controls>
-      <LineController />
-      <ColorController />
+      <LineController setLine={setLine} line={line} />
+      <ColorController setColor={setColor} />
     </Controls>
   );
 };

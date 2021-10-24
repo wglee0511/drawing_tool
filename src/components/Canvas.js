@@ -1,20 +1,40 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
 
-const Canvas = () => {
+const Canvas = (props) => {
+  const { line, color } = props;
+
   let canvas;
   let canvasRef = useRef(null);
+  const [x, setX] = useState(null);
+  const [y, setY] = useState(null);
+  const [isDrawing, setIsDrawing] = useState(false);
 
   const onMouseMove = (event) => {
     const x = event.offsetX;
     const y = event.offsetY;
-    console.log(x, y);
+    setX(() => x);
+    setY(() => y);
+  };
+
+  const handleStopPainting = (event) => {
+    setIsDrawing(false);
+  };
+  const onMouseDown = (event) => {
+    setIsDrawing(true);
+  };
+
+  const onMouseUp = (event) => {
+    handleStopPainting();
   };
 
   useEffect(() => {
     canvas = canvasRef.current;
     canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mousedown", onMouseDown);
+    canvas.addEventListener("mouseup", onMouseUp);
+    canvas.addEventListener("mouseleave", handleStopPainting);
   }, []);
 
   return <CanvasDiv ref={canvasRef}></CanvasDiv>;

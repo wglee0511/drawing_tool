@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
 
-const ColorController = () => {
+const ColorController = (props) => {
+  const { setColor } = props;
   return (
     <Wrapper>
       <Color color={theme.color.black} />
