@@ -1,46 +1,62 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
 
 const Canvas = (props) => {
-  const { line, color } = props;
+  const { line, color, canvasSize } = props;
 
-  let canvas;
-  let canvasRef = useRef(null);
-  const [x, setX] = useState(null);
-  const [y, setY] = useState(null);
+  const canvasRef = useRef(null);
+  const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [ctx, setContext] = useState();
 
-  const onMouseMove = (event) => {
-    const x = event.offsetX;
-    const y = event.offsetY;
-    setX(() => x);
-    setY(() => y);
+  const onMouseMove = ({ nativeEvent }) => {
+    const x = nativeEvent.offsetX;
+    const y = nativeEvent.offsetY;
+
+    if (ctx) {
+      if (!isDrawing) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+    }
   };
 
-  const handleStopPainting = (event) => {
-    setIsDrawing(false);
+  const handleStopPainting = () => {
+    setIsDrawing(() => false);
   };
-  const onMouseDown = (event) => {
-    setIsDrawing(true);
-  };
-
-  const onMouseUp = (event) => {
-    handleStopPainting();
+  const handleStartDrawing = (event) => {
+    setIsDrawing(() => true);
   };
 
   useEffect(() => {
-    canvas = canvasRef.current;
-    canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mousedown", onMouseDown);
-    canvas.addEventListener("mouseup", onMouseUp);
-    canvas.addEventListener("mouseleave", handleStopPainting);
-  }, []);
+    const canvas = canvasRef.current;
+    canvas.width = canvasSize[0];
+    canvas.height = canvasSize[1];
 
-  return <CanvasDiv ref={canvasRef}></CanvasDiv>;
+    const context = canvas.getContext("2d");
+    context.strokeStyle = color;
+    context.lineWidth = line;
+    contextRef.current = context;
+
+    setContext(() => contextRef.current);
+  }, [line, color]);
+
+  return (
+    <CanvasDiv
+      onMouseMove={onMouseMove}
+      onMouseDown={handleStartDrawing}
+      onMouseUp={handleStopPainting}
+      onMouseLeave={handleStopPainting}
+      ref={canvasRef}
+    />
+  );
 };
 
-const CanvasDiv = styled.div`
+const CanvasDiv = styled.canvas`
   background-color: ${theme.color.white};
   margin: 50px auto 50px auto;
   width: 700px;

@@ -7,7 +7,7 @@ const LineController = (props) => {
   let inputRef = useRef(null);
   const handleLineChange = (event) => {
     const size = event.target.value;
-    setLine(() => size);
+    setLine(() => Number(size));
   };
 
   useEffect(() => {
@@ -16,15 +16,18 @@ const LineController = (props) => {
   }, []);
 
   return (
-    <Input
-      ref={inputRef}
-      type="range"
-      min="0.1"
-      max="5.0"
-      value={line}
-      step="0.1"
-      onChange={handleLineChange}
-    />
+    <label style={{ marginBottom: "50px" }}>
+      Line Width :
+      <Input
+        ref={inputRef}
+        type="range"
+        min="0.1"
+        max="5.0"
+        value={line}
+        step="0.1"
+        onChange={handleLineChange}
+      />
+    </label>
   );
 };
 
