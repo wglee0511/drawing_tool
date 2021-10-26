@@ -5,6 +5,16 @@ import theme from "../styles/theme";
 const ColorController = (props) => {
   const { setColor } = props;
 
+  const onColorChange = (color) => {
+    let targetColor;
+    if (color === "black") {
+      targetColor = theme.color
+      
+    } else if {
+
+    }
+  }
+
   return (
     <Wrapper>
       <Color

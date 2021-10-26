@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
 
@@ -45,9 +45,14 @@ const Canvas = (props) => {
     setContext(() => contextRef.current);
   }, [line, color]);
 
+
   return (
     <CanvasDiv
       onMouseMove={onMouseMove}
+      onTouchStart={handleStartDrawing}
+      onTouchEnd={handleStopPainting}
+      onTouchMove={onMouseMove}
+
       onMouseDown={handleStartDrawing}
       onMouseUp={handleStopPainting}
       onMouseLeave={handleStopPainting}
