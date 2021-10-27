@@ -62,6 +62,13 @@ const LineDataProvider = (props) => {
         setCountPoint(0);
         setPoints([]);
       }
+    } else if (lineType === theme.type.circle) {
+      ctx.beginPath();
+      ctx.arc(x, y, currentRadi, 0, Math.PI * 2);
+      ctx.stroke();
+      handlePlusImageArr();
+      setCountPoint(0);
+      setPoints([]);
     }
   };
 

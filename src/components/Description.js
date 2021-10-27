@@ -14,7 +14,9 @@ const Description = () => {
     } else if (type === theme.type.normal) {
       return "드래그 하여 선을 그려주세요.";
     } else if (type === theme.type.arc) {
-      return "반경을 설정하고 곡선의 시작점, 곡면의 방향점, 방향점과 이어지는 원의 접선방향 점을 클릭해 주세요.";
+      return "반경을 입력하고 곡선의 시작점, 곡면의 방향점, 방향점과 이어지는 원의 접선방향 점을 클릭해 주세요.";
+    } else if (type === theme.type.circle) {
+      return "빈경을 입력하고 원의 중심을 클릭하세요.";
     }
   };
 
@@ -31,26 +33,29 @@ const Description = () => {
 
   return (
     <Wrapper>
-      {lineType === theme.type.arc && (
-        <form
-          onSubmit={handleOnSubmit}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "15px",
-          }}
-        >
-          <input
-            style={{ height: "30px" }}
-            type="text"
-            onChange={handleOnChange}
-            value={radius}
-          />
-          <Btn isForm>입력</Btn>
-        </form>
+      {(lineType === theme.type.arc || lineType === theme.type.circle) && (
+        <>
+          <form
+            onSubmit={handleOnSubmit}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: "15px",
+            }}
+          >
+            <input
+              style={{ height: "30px" }}
+              type="text"
+              onChange={handleOnChange}
+              value={radius}
+            />
+            <Btn isForm>입력</Btn>
+          </form>
+          <Btn>current radius : {currentRadi}</Btn>
+        </>
       )}
-      {lineType === theme.type.arc && <Btn>current radius : {currentRadi}</Btn>}
+
       <Btn>{messageMaker(lineType)}</Btn>
     </Wrapper>
   );
