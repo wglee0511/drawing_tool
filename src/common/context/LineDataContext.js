@@ -72,7 +72,6 @@ const LineDataProvider = (props) => {
     }
   };
 
-  console.log(imageArr);
   const value = {
     imageArr,
     setImageArr,

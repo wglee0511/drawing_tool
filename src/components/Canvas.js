@@ -19,6 +19,7 @@ const Canvas = (props) => {
   const contextRef = useRef(null);
 
   const [isDrawing, setIsDrawing] = useState(false);
+  const [startPoint, setStartPoint] = useState([]);
 
   const onMouseMove = ({ nativeEvent }) => {
     const x = nativeEvent.offsetX;
@@ -41,11 +42,28 @@ const Canvas = (props) => {
   };
 
   const handleStopPainting = (event) => {
-    if (lineType !== theme.type.normal) {
+    if (
+      lineType === theme.type.arc ||
+      lineType === theme.type.circle ||
+      lineType === theme.type.line
+    ) {
       return;
+    }
+    const x = event.nativeEvent.offsetX;
+    const y = event.nativeEvent.offsetY;
+    const ctx = canvasRef.current.getContext("2d");
+    if (lineType === theme.type.rect) {
+      ctx.strokeRect(
+        startPoint[0],
+        startPoint[1],
+        x - startPoint[0],
+        y - startPoint[1]
+      );
+      setStartPoint([]);
     }
     event.preventDefault();
     setIsDrawing(false);
+
     if (event.type !== "mouseout") {
       const imageData = contextRef.current.getImageData(
         0,
@@ -65,9 +83,17 @@ const Canvas = (props) => {
     }
   };
   const handleStartDrawing = (event) => {
-    if (lineType !== theme.type.normal) {
+    if (
+      lineType === theme.type.arc ||
+      lineType === theme.type.circle ||
+      lineType === theme.type.line
+    ) {
       return;
     }
+    console.log("cli");
+    const x = event.nativeEvent.offsetX;
+    const y = event.nativeEvent.offsetY;
+    setStartPoint([x, y]);
     event.preventDefault();
     setIsDrawing(true);
   };
