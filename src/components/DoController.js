@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { LineDataContext } from "../common/context/LineDataContext";
+import theme from "../styles/theme";
 
 const DoController = (props) => {
   const { color } = props;
@@ -11,16 +12,26 @@ const DoController = (props) => {
   const canvas = canvasRef.current;
 
   const handleClear = () => {
-    ctx.fillStyle = color;
+    ctx.fillStyle = theme.color.white;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     setImageArr([]);
     setIndex(-1);
   };
-  const handleUndo = () => {};
-  const handleRedo = () => {};
+  const handleUndo = () => {
+    if (arrIndex <= 0) {
+      handleClear();
+    } else {
+      const newIndex = arrIndex - 1;
+      setIndex((prev) => (prev -= 1));
+      const newArr = imageArr.slice(0, arrIndex);
 
+      ctx.putImageData(newArr[newIndex], 0, 0);
+    }
+  };
+  const handleRedo = () => {};
+  console.log(imageArr);
   return (
     <Wrapper>
       <Btn onClick={handleClear}>Clear</Btn>
