@@ -6,8 +6,15 @@ import theme from "../styles/theme";
 const Canvas = (props) => {
   const { line, color, canvasSize } = props;
   const lineContext = useContext(LineDataContext);
-  const { canvasRef, setImageArr, setIndex, arrIndex, imageArr, lineType } =
-    lineContext;
+  const {
+    canvasRef,
+    handlePointClick,
+    setImageArr,
+    setIndex,
+    arrIndex,
+    imageArr,
+    lineType,
+  } = lineContext;
 
   const contextRef = useRef(null);
 
@@ -34,16 +41,10 @@ const Canvas = (props) => {
   };
 
   const handleStopPainting = (event) => {
-    event.preventDefault();
-    const ctx = canvasRef.current.getContext("2d");
-    if (isDrawing) {
-      if (lineType === theme.type.line) {
-        const x = event.nativeEvent.offsetX;
-        const y = event.nativeEvent.offsetY;
-        ctx.lineTo(x, y);
-        ctx.stroke();
-      }
+    if (lineType !== theme.type.normal) {
+      return;
     }
+    event.preventDefault();
     setIsDrawing(false);
     if (event.type !== "mouseout") {
       const imageData = contextRef.current.getImageData(
@@ -64,16 +65,10 @@ const Canvas = (props) => {
     }
   };
   const handleStartDrawing = (event) => {
-    event.preventDefault();
-    const ctx = canvasRef.current.getContext("2d");
-    if (!isDrawing) {
-      if (lineType === theme.type.line) {
-        const x = event.nativeEvent.offsetX;
-        const y = event.nativeEvent.offsetY;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-      }
+    if (lineType !== theme.type.normal) {
+      return;
     }
+    event.preventDefault();
     setIsDrawing(true);
   };
 
@@ -88,9 +83,12 @@ const Canvas = (props) => {
     }
   }, []);
 
+  console.log(imageArr);
+
   return (
     <CanvasDiv
       ref={canvasRef}
+      onClick={handlePointClick}
       onMouseMove={onMouseMove}
       onMouseDown={handleStartDrawing}
       onMouseUp={handleStopPainting}
