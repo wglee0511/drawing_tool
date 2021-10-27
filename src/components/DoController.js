@@ -5,20 +5,32 @@ import theme from "../styles/theme";
 
 const DoController = () => {
   const lineContext = useContext(LineDataContext);
-  const { canvasRef, setImageArr, setIndex, arrIndex, imageArr } = lineContext;
-
-  const ctx = canvasRef.current?.getContext("2d");
-  const canvas = canvasRef.current;
+  const {
+    canvasRef,
+    setImageArr,
+    setIndex,
+    arrIndex,
+    imageArr,
+    pointsArr,
+    setPoints,
+    countPoint,
+    setCountPoint,
+  } = lineContext;
 
   const handleClear = () => {
+    const ctx = canvasRef.current?.getContext("2d");
+    const canvas = canvasRef.current;
     ctx.fillStyle = theme.color.white;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+    setPoints([]);
+    setCountPoint(0);
     setImageArr([]);
     setIndex(-1);
   };
   const handleUndo = () => {
+    const ctx = canvasRef.current?.getContext("2d");
+    const canvas = canvasRef.current;
     if (arrIndex == 0) {
       ctx.fillStyle = theme.color.white;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -35,6 +47,8 @@ const DoController = () => {
     }
   };
   const handleRedo = () => {
+    const ctx = canvasRef.current?.getContext("2d");
+
     const lastIndex = imageArr.length - 1;
     if (lastIndex === arrIndex) {
       return;

@@ -83,8 +83,6 @@ const Canvas = (props) => {
     }
   }, []);
 
-  console.log(imageArr);
-
   return (
     <CanvasDiv
       ref={canvasRef}

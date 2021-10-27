@@ -18,10 +18,7 @@ const Controller = (props) => {
       <LineController setLine={setLine} line={line} />
       <DoController color={color} />
       <LineTypeSelector />
-      {(lineType === theme.type.line ||
-        lineType === theme.type.arc ||
-        lineType === theme.type.circle ||
-        lineType === theme.type.rect) && <Description />}
+      <Description />
       <ColorController setColor={setColor} />
     </Controls>
   );
