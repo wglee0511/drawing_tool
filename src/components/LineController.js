@@ -11,7 +11,7 @@ const LineController = (props) => {
   };
 
   return (
-    <label style={{ marginBottom: "50px" }}>
+    <label style={{ marginBottom: "15px" }}>
       Line Width :
       <Input
         ref={inputRef}

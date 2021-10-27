@@ -1,9 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { logger } from "workbox-core/_private";
 import Canvas from "../components/Canvas";
 import Controller from "../components/Controller";
-
 import "../styles/App.css";
 import theme from "../styles/theme";
 
@@ -15,7 +13,13 @@ function App() {
   return (
     <Wrapper className="App">
       <Canvas line={line} color={color} canvasSize={canvasSize} />
-      <Controller setLine={setLine} setColor={setColor} line={line} />
+      <Controller
+        color={color}
+        setLine={setLine}
+        setColor={setColor}
+        line={line}
+        setCanvasSize={setCanvasSize}
+      />
     </Wrapper>
   );
 }

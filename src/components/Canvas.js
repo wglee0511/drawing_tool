@@ -1,20 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { LineDataContext } from "../common/context/LineDataContext";
 import theme from "../styles/theme";
 
 const Canvas = (props) => {
   const { line, color, canvasSize } = props;
+  const lineContext = useContext(LineDataContext);
+  const { canvasRef, setImageArr, setIndex, arrIndex, imageArr } = lineContext;
 
-  const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
   const onMouseMove = ({ nativeEvent }) => {
     const x = nativeEvent.offsetX;
     const y = nativeEvent.offsetY;
-    const ctx = contextRef.current;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = line;
+
+    const ctx = canvasRef.current.getContext("2d");
+    ctx.strokeStyle = color ? color : "black";
+    ctx.lineWidth = line ? line : 2.5;
     if (ctx) {
       if (!isDrawing) {
         ctx.beginPath();
@@ -26,32 +29,52 @@ const Canvas = (props) => {
     }
   };
 
-  const handleStopPainting = () => {
+  const handleStopPainting = (event) => {
     setIsDrawing(false);
+    event.preventDefault();
+    if (event.type !== "mouseout") {
+      const imageData = contextRef.current.getImageData(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
+      const lastIndex = imageArr.length - 1;
+      if (lastIndex !== arrIndex) {
+        const newArr = imageArr.splice(0, arrIndex);
+        setImageArr(() => [...newArr, imageData]);
+        setIndex((prev) => (prev += 1));
+      } else {
+        setImageArr((prev) => [...prev, imageData]);
+        setIndex((prev) => (prev += 1));
+      }
+    }
   };
-  const handleStartDrawing = (event) => {
+  const handleStartDrawing = () => {
     setIsDrawing(true);
   };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    canvas.width = canvasSize[0];
-    canvas.height = canvasSize[1];
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      canvas.width = canvasSize[0];
+      canvas.height = canvasSize[1];
 
-    const context = canvas.getContext("2d");
-    contextRef.current = context;
+      const context = canvas.getContext("2d");
+      contextRef.current = context;
+    }
   }, []);
 
   return (
     <CanvasDiv
+      ref={canvasRef}
       onMouseMove={onMouseMove}
+      onMouseDown={handleStartDrawing}
+      onMouseUp={handleStopPainting}
+      onMouseOut={handleStopPainting}
       onTouchStart={handleStartDrawing}
       onTouchEnd={handleStopPainting}
       onTouchMove={onMouseMove}
-      onMouseDown={handleStartDrawing}
-      onMouseUp={handleStopPainting}
-      onMouseLeave={handleStopPainting}
-      ref={canvasRef}
     />
   );
 };

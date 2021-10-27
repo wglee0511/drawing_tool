@@ -3,10 +3,13 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import App from "./common/App";
 import reportWebVitals from "./reportWebVitals";
+import { LineDataProvider } from "./common/context/LineDataContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LineDataProvider>
+      <App />
+    </LineDataProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
