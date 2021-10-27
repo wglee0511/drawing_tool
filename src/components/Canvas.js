@@ -41,7 +41,7 @@ const Canvas = (props) => {
       );
       const lastIndex = imageArr.length - 1;
       if (lastIndex !== arrIndex) {
-        const newArr = imageArr.splice(0, arrIndex);
+        const newArr = imageArr.splice(0, arrIndex + 1);
         setImageArr(() => [...newArr, imageData]);
         setIndex((prev) => (prev += 1));
       } else {

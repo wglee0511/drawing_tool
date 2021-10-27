@@ -21,7 +21,7 @@ const DoController = (props) => {
   };
   const handleUndo = () => {
     if (arrIndex <= 0) {
-      handleClear();
+      return;
     } else {
       const newIndex = arrIndex - 1;
       setIndex((prev) => (prev -= 1));
@@ -30,8 +30,21 @@ const DoController = (props) => {
       ctx.putImageData(newArr[newIndex], 0, 0);
     }
   };
-  const handleRedo = () => {};
+  const handleRedo = () => {
+    const lastIndex = imageArr.length - 1;
+    if (lastIndex === arrIndex) {
+      return;
+    }
+
+    const newIndex = arrIndex + 1;
+    setIndex((prev) => (prev += 1));
+    const newArr = imageArr.slice(0, arrIndex);
+    console.log(ctx);
+    //ctx.putImageData(newArr[newIndex], 0, 0);
+  };
+
   console.log(imageArr);
+
   return (
     <Wrapper>
       <Btn onClick={handleClear}>Clear</Btn>
