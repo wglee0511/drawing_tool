@@ -1,4 +1,11 @@
 const theme = {
+  type: {
+    normal: "normal",
+    line: "line",
+    arc: "arc",
+    circle: "circle",
+    rect: "rect",
+  },
   color: {
     bg: "#F6F9FC",
     black: "#2c2c2c",

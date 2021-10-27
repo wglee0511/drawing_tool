@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { LineDataContext } from "../common/context/LineDataContext";
 import theme from "../styles/theme";
 
-const DoController = (props) => {
-  const { color } = props;
+const DoController = () => {
   const lineContext = useContext(LineDataContext);
   const { canvasRef, setImageArr, setIndex, arrIndex, imageArr } = lineContext;
 

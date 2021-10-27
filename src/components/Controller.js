@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ColorController from "./ColorController";
 import DoController from "./DoController";
 import LineController from "./LineController";
+import LineTypeSelector from "./LineTypeSelector";
 
 const Controller = (props) => {
   const { setLine, setColor, line, color } = props;
@@ -11,6 +12,7 @@ const Controller = (props) => {
     <Controls>
       <LineController setLine={setLine} line={line} />
       <DoController color={color} />
+      <LineTypeSelector />
       <ColorController setColor={setColor} />
     </Controls>
   );

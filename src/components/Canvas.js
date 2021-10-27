@@ -6,32 +6,45 @@ import theme from "../styles/theme";
 const Canvas = (props) => {
   const { line, color, canvasSize } = props;
   const lineContext = useContext(LineDataContext);
-  const { canvasRef, setImageArr, setIndex, arrIndex, imageArr } = lineContext;
+  const { canvasRef, setImageArr, setIndex, arrIndex, imageArr, lineType } =
+    lineContext;
 
   const contextRef = useRef(null);
+
   const [isDrawing, setIsDrawing] = useState(false);
 
   const onMouseMove = ({ nativeEvent }) => {
     const x = nativeEvent.offsetX;
     const y = nativeEvent.offsetY;
-
     const ctx = canvasRef.current.getContext("2d");
     ctx.strokeStyle = color ? color : "black";
     ctx.lineWidth = line ? line : 2.5;
+
     if (ctx) {
-      if (!isDrawing) {
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-        ctx.stroke();
+      if (lineType === theme.type.normal) {
+        if (!isDrawing) {
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
       }
     }
   };
 
   const handleStopPainting = (event) => {
-    setIsDrawing(false);
     event.preventDefault();
+    const ctx = canvasRef.current.getContext("2d");
+    if (isDrawing) {
+      if (lineType === theme.type.line) {
+        const x = event.nativeEvent.offsetX;
+        const y = event.nativeEvent.offsetY;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+    }
+    setIsDrawing(false);
     if (event.type !== "mouseout") {
       const imageData = contextRef.current.getImageData(
         0,
@@ -50,7 +63,17 @@ const Canvas = (props) => {
       }
     }
   };
-  const handleStartDrawing = () => {
+  const handleStartDrawing = (event) => {
+    event.preventDefault();
+    const ctx = canvasRef.current.getContext("2d");
+    if (!isDrawing) {
+      if (lineType === theme.type.line) {
+        const x = event.nativeEvent.offsetX;
+        const y = event.nativeEvent.offsetY;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+      }
+    }
     setIsDrawing(true);
   };
 
