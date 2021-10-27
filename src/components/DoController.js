@@ -20,7 +20,12 @@ const DoController = (props) => {
     setIndex(-1);
   };
   const handleUndo = () => {
-    if (arrIndex <= 0) {
+    if (arrIndex == 0) {
+      ctx.fillStyle = theme.color.white;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      setIndex((prev) => (prev -= 1));
+    } else if (arrIndex == -1) {
       return;
     } else {
       const newIndex = arrIndex - 1;
@@ -38,12 +43,10 @@ const DoController = (props) => {
 
     const newIndex = arrIndex + 1;
     setIndex((prev) => (prev += 1));
-    const newArr = imageArr.slice(0, arrIndex);
-    console.log(ctx);
-    //ctx.putImageData(newArr[newIndex], 0, 0);
-  };
+    const newArr = imageArr.slice(0, arrIndex + 2);
 
-  console.log(imageArr);
+    ctx.putImageData(newArr[newIndex], 0, 0);
+  };
 
   return (
     <Wrapper>
