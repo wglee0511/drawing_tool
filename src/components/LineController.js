@@ -1,19 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 const LineController = (props) => {
   const { setLine, line } = props;
-  let input;
+
   let inputRef = useRef(null);
   const handleLineChange = (event) => {
     const size = event.target.value;
     setLine(() => Number(size));
   };
-
-  useEffect(() => {
-    input = inputRef.current;
-    input.addEventListener("input", handleLineChange);
-  }, []);
 
   return (
     <label style={{ marginBottom: "50px" }}>

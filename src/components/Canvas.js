@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
 
@@ -8,12 +8,13 @@ const Canvas = (props) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [ctx, setContext] = useState();
 
   const onMouseMove = ({ nativeEvent }) => {
     const x = nativeEvent.offsetX;
     const y = nativeEvent.offsetY;
-
+    const ctx = contextRef.current;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = line;
     if (ctx) {
       if (!isDrawing) {
         ctx.beginPath();
@@ -26,10 +27,10 @@ const Canvas = (props) => {
   };
 
   const handleStopPainting = () => {
-    setIsDrawing(() => false);
+    setIsDrawing(false);
   };
   const handleStartDrawing = (event) => {
-    setIsDrawing(() => true);
+    setIsDrawing(true);
   };
 
   useEffect(() => {
@@ -38,13 +39,8 @@ const Canvas = (props) => {
     canvas.height = canvasSize[1];
 
     const context = canvas.getContext("2d");
-    context.strokeStyle = color;
-    context.lineWidth = line;
     contextRef.current = context;
-
-    setContext(() => contextRef.current);
-  }, [line, color]);
-
+  }, []);
 
   return (
     <CanvasDiv
@@ -52,7 +48,6 @@ const Canvas = (props) => {
       onTouchStart={handleStartDrawing}
       onTouchEnd={handleStopPainting}
       onTouchMove={onMouseMove}
-
       onMouseDown={handleStartDrawing}
       onMouseUp={handleStopPainting}
       onMouseLeave={handleStopPainting}
