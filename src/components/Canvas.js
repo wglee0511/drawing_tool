@@ -67,7 +67,7 @@ const Canvas = (props) => {
     setIsDrawing(false);
 
     if (event.type !== "mouseout") {
-      const imageData = contextRef?.current?.getImageData(
+      const imageData = ctx.getImageData(
         0,
         0,
         canvasRef.current.width,
@@ -94,7 +94,7 @@ const Canvas = (props) => {
     ) {
       return;
     }
-    
+
     const x = event.nativeEvent.offsetX;
     const y = event.nativeEvent.offsetY;
     setStartPoint([x, y]);
@@ -107,7 +107,6 @@ const Canvas = (props) => {
       const canvas = canvasRef.current;
       canvas.width = canvasSize[0];
       canvas.height = canvasSize[1];
-
     }
   }, []);
 

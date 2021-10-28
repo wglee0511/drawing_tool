@@ -82,27 +82,25 @@ const LineDataProvider = (props) => {
         setPoints([]);
       }
     } else if (lineType === theme.type.poly) {
-      if(currentRadi <= 2) {
-        window.alert("2 이상의 숫자를 입력해주세요.")
-        return
+      if (currentRadi <= 2) {
+        window.alert("2 이상의 숫자를 입력해주세요.");
+        return;
       } else if (nowCount === currentRadi) {
-        ctx.beginPath()
+        ctx.beginPath();
         pointsArr.map((each, index) => {
-         index === 0 ? ctx.moveTo(each[0], each[1]) : ctx.lineTo(each[0], each[1])
-        })
+          index === 0
+            ? ctx.moveTo(each[0], each[1])
+            : ctx.lineTo(each[0], each[1]);
+        });
         ctx.lineTo(x, y);
         ctx.closePath();
-        ctx.stroke()
+        ctx.stroke();
         handlePlusImageArr();
         setCountPoint(0);
         setPoints([]);
-
-
       }
     }
   };
-
-  console.log(countPoint)
 
   const value = {
     imageArr,
