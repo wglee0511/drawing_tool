@@ -45,7 +45,9 @@ const Canvas = (props) => {
     if (
       lineType === theme.type.arc ||
       lineType === theme.type.circle ||
-      lineType === theme.type.line
+      lineType === theme.type.line ||
+      lineType === theme.type.tri ||
+      lineType === theme.type.poly
     ) {
       return;
     }
@@ -65,7 +67,7 @@ const Canvas = (props) => {
     setIsDrawing(false);
 
     if (event.type !== "mouseout") {
-      const imageData = contextRef.current.getImageData(
+      const imageData = contextRef?.current?.getImageData(
         0,
         0,
         canvasRef.current.width,
@@ -86,11 +88,13 @@ const Canvas = (props) => {
     if (
       lineType === theme.type.arc ||
       lineType === theme.type.circle ||
-      lineType === theme.type.line
+      lineType === theme.type.line ||
+      lineType === theme.type.tri ||
+      lineType === theme.type.poly
     ) {
       return;
     }
-    console.log("cli");
+    
     const x = event.nativeEvent.offsetX;
     const y = event.nativeEvent.offsetY;
     setStartPoint([x, y]);
@@ -104,8 +108,6 @@ const Canvas = (props) => {
       canvas.width = canvasSize[0];
       canvas.height = canvasSize[1];
 
-      const context = canvas.getContext("2d");
-      contextRef.current = context;
     }
   }, []);
 

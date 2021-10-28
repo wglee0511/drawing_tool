@@ -5,6 +5,8 @@ const theme = {
     arc: "arc",
     circle: "circle",
     rect: "rect",
+    tri: "tri",
+    poly: "poly"
   },
   color: {
     bg: "#F6F9FC",

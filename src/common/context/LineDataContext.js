@@ -9,8 +9,8 @@ const LineDataProvider = (props) => {
   const [arrIndex, setIndex] = useState(-1);
   const [lineType, setLineType] = useState(theme.type.normal);
   // radious는 strung 상태
-  const [radius, setRadius] = useState(50);
-  const [currentRadi, setCurrentRadi] = useState(50);
+  const [radius, setRadius] = useState(10);
+  const [currentRadi, setCurrentRadi] = useState(10);
   const [pointsArr, setPoints] = useState([]);
   const [countPoint, setCountPoint] = useState(0);
 
@@ -30,7 +30,7 @@ const LineDataProvider = (props) => {
   };
 
   const handlePointClick = (event) => {
-    if (lineType === theme.type.normal) {
+    if (lineType === theme.type.normal || lineType === theme.type.rect) {
       return;
     }
     const ctx = canvasRef.current.getContext("2d");
@@ -69,8 +69,40 @@ const LineDataProvider = (props) => {
       handlePlusImageArr();
       setCountPoint(0);
       setPoints([]);
+    } else if (lineType === theme.type.tri) {
+      if (nowCount === 3) {
+        ctx.beginPath();
+        ctx.moveTo(pointsArr[0][0], pointsArr[0][1]);
+        ctx.lineTo(pointsArr[1][0], pointsArr[1][1]);
+        ctx.lineTo(x, y);
+        ctx.closePath();
+        ctx.stroke();
+        handlePlusImageArr();
+        setCountPoint(0);
+        setPoints([]);
+      }
+    } else if (lineType === theme.type.poly) {
+      if(currentRadi <= 2) {
+        window.alert("2 이상의 숫자를 입력해주세요.")
+        return
+      } else if (nowCount === currentRadi) {
+        ctx.beginPath()
+        pointsArr.map((each, index) => {
+         index === 0 ? ctx.moveTo(each[0], each[1]) : ctx.lineTo(each[0], each[1])
+        })
+        ctx.lineTo(x, y);
+        ctx.closePath();
+        ctx.stroke()
+        handlePlusImageArr();
+        setCountPoint(0);
+        setPoints([]);
+
+
+      }
     }
   };
+
+  console.log(countPoint)
 
   const value = {
     imageArr,

@@ -42,8 +42,7 @@ const DoController = () => {
       const newIndex = arrIndex - 1;
       setIndex((prev) => (prev -= 1));
       const newArr = imageArr.slice(0, arrIndex);
-
-      ctx.putImageData(newArr[newIndex], 0, 0);
+      ctx?.putImageData(newArr[newIndex], 0, 0);
     }
   };
   const handleRedo = () => {

@@ -19,6 +19,10 @@ const Description = () => {
       return "빈경을 입력하고 원의 중심을 클릭하세요.";
     } else if (type === theme.type.rect) {
       return "그래그 하여 사각형을 그려주세요.";
+    } else if (type === theme.type.tri) {
+      return "세개의 점을 클릭해 삼각형을 그려주세요.";
+    } else {
+      return "2이상의 숫자를 입력한 후 선택한 점 개수를 클릭하고 다각형을 그려주세요"
     }
   };
 
@@ -35,7 +39,7 @@ const Description = () => {
 
   return (
     <Wrapper>
-      {(lineType === theme.type.arc || lineType === theme.type.circle) && (
+      {(lineType === theme.type.arc || lineType === theme.type.circle || lineType=== theme.type.poly) && (
         <>
           <form
             onSubmit={handleOnSubmit}
@@ -54,7 +58,7 @@ const Description = () => {
             />
             <Btn isForm>입력</Btn>
           </form>
-          <Btn>current radius : {currentRadi}</Btn>
+          <Btn>{lineType===theme.type.poly? "Selected node": "Current radius"} : {currentRadi}</Btn>
         </>
       )}
 

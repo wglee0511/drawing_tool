@@ -38,6 +38,18 @@ const LineTypeSelector = () => {
       >
         {theme.type.rect}
       </Btn>
+      <Btn
+        onClick={() => setLineType(theme.type.tri)}
+        isClicked={lineType === theme.type.tri ? true : false}
+      >
+        {theme.type.tri}
+      </Btn>
+      <Btn
+        onClick={() => setLineType(theme.type.poly)}
+        isClicked={lineType === theme.type.poly ? true : false}
+      >
+        {theme.type.poly}
+      </Btn>
     </Wrapper>
   );
 };
