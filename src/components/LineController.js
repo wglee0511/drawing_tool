@@ -15,11 +15,8 @@ const LineController = (props) => {
       Line Width :
       <Input
         ref={inputRef}
-        type="range"
-        min="0.1"
-        max="5.0"
+        type="text"
         value={line}
-        step="0.1"
         onChange={handleLineChange}
       />
     </label>

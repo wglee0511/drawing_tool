@@ -11,9 +11,7 @@ const DoController = () => {
     setIndex,
     arrIndex,
     imageArr,
-    pointsArr,
     setPoints,
-    countPoint,
     setCountPoint,
   } = lineContext;
 
@@ -61,11 +59,21 @@ const DoController = () => {
     ctx.putImageData(newArr[newIndex], 0, 0);
   };
 
+  const handleSave = () => {
+    const canvas = canvasRef.current;
+    const image = canvas.toDataURL("image/svg+xml");
+    const link = document.createElement("a");
+
+    link.href = image;
+    link.download = "Canvas";
+    link.click();
+  };
   return (
     <Wrapper>
       <Btn onClick={handleClear}>Clear</Btn>
       <Btn onClick={handleUndo}>Undo</Btn>
       <Btn onClick={handleRedo}>Redo</Btn>
+      <Btn onClick={handleSave}>Save</Btn>
     </Wrapper>
   );
 };
